@@ -1,107 +1,82 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CMP1903_A2_2324
 {
     internal class Game
     {
-        // Creating the dice objects 
+    }
+
+    internal class SevensOut : Game
+    {
+        Die dice1 = new Die();
+        Die dice2 = new Die();
+        List<int> rolls = new List<int>();
+
+        public void Play()
+        {
+            bool done = false;
+            int total = 0;
+            while (!done)
+            {
+                int rolledNumber1 = dice1.Roll();
+                int rolledNumber2 = dice2.Roll();
+                int sum = rolledNumber1 + rolledNumber2;
+                if (sum == 7)
+                {
+                    done = true;
+                }
+                else if (rolledNumber1 == rolledNumber2) 
+                {
+                    total = total + (sum * 2);
+                }
+
+                else 
+                {
+                    total = total + sum;
+                }
+                Console.WriteLine($"Rolled number 1 is {rolledNumber1}");
+                Console.WriteLine($"Rolled number 2 is {rolledNumber2}");
+                Console.WriteLine($"The sum is {sum}");
+                Console.WriteLine($"The total is {total}");
+                Console.WriteLine();
+            }
+            Console.WriteLine($"The final total is {total}");
+        }
+    }
+
+    internal class ThreeOrMore : Game
+    {
         Die dice1 = new Die();
         Die dice2 = new Die();
         Die dice3 = new Die();
+        Die dice4 = new Die();
+        Die dice5 = new Die();
+        List<int> rolls = new List<int>();
 
-        // initializing the rolled numbers fields so I can make the property
-        private int rolledNumber1;
-        private int rolledNumber2;
-        private int rolledNumber3;
-
-        // Setting them as properties so I can access them in the testing class
-
-        /// <summary>
-        /// Properity for storing the 1st rolled value
-        /// </summary>
-        public int RolledNumber1
+        public void Play() 
         {
-            get { return rolledNumber1; }
-            set { rolledNumber1 = value; }
-        }
-
-        /// <summary>
-        /// Properity for storing the 2nd rolled value
-        /// </summary>
-        public int RolledNumber2
-        {
-            get { return rolledNumber2; }
-            set { rolledNumber2 = value; }
-        }
-
-        /// <summary>
-        /// Properity for storing the 3rd rolled value
-        /// </summary>
-        public int RolledNumber3
-        {
-            get { return rolledNumber3; }
-            set { rolledNumber3 = value; }
-        }
-
-        /// <summary>
-        /// Create 3 dice objects then get the values and add them together
-        /// </summary>
-        /// <returns>The total of the rolls</returns>
-        public int Play()
-        {
-            // Getting the rolled number by accessing the property
-            rolledNumber1 = dice1.Roll();
-            Console.WriteLine($"You rolled a {rolledNumber1}");
-            rolledNumber2 = dice2.Roll();
-            Console.WriteLine($"You rolled a {rolledNumber2}");
-            rolledNumber3 = dice3.Roll();
-            Console.WriteLine($"You rolled a {rolledNumber3}");
-            // Getting the total
-            int totalNumber = rolledNumber1 + rolledNumber2 + rolledNumber3;
-            Console.WriteLine($"The total of your rolls are {totalNumber}");
-            // Returning the total number for the testing class
-            return totalNumber;
-        }
-
-
-        /// <summary>
-        /// This mehod calls the Play method in a while loop until the user ends it
-        /// </summary>
-        public void PlayContinuous()
-        {
-            // Setting a done variable to False so I can end the while loop by setting it to true
             bool done = false;
-            while (done == false)
+            int total = 0;
+            while (total < 20)
             {
-                // Playing the game by calling the method
-                Play();
-                // adding another while loop
-                bool yesOrNo = false;
-                while (!yesOrNo)
-                {
-                    // Asking user to play again
-                    Console.WriteLine("Type \"yes\" if you want to play again and \"no\" if you don't");
-                    string playAgain = Console.ReadLine();
-                    // Two methods to help against type errors but doesn't prevent them
-                    // Gets rid of any white spaces before and after the word
-                    playAgain = playAgain.Trim();
-                    // Makes the word all lowercase
-                    playAgain.ToLower();
-                    if (playAgain == "yes" || playAgain == "no")
-                    {
-                        // Ending the second loop
-                        yesOrNo = true;
-                    }
-
-                    if (playAgain == "no")
-                    {
-                        // Ending the first loop
-                        done = true;
-                    }
-                }
-                // Two methods to help against type errors but doesn't prevent them
-                // Seperating the games in the terminal
-                Console.WriteLine("");
+                int rolledNumber1 = dice1.Roll();
+                int rolledNumber2 = dice2.Roll();
+                int rolledNumber3 = dice3.Roll();
+                int rolledNumber4 = dice4.Roll();
+                int rolledNumber5 = dice5.Roll();
+                rolls.Add(rolledNumber1);
+                rolls.Add(rolledNumber2);
+                rolls.Add(rolledNumber3);
+                rolls.Add(rolledNumber4);
+                rolls.Add(rolledNumber5);
+                IEnumerable<int> output = rolls
+                                          .GroupBy(i => i)
+                                          .Where(g => g.Count() > 1)
+                                          .Select(g => g.Key);
+                Console.WriteLine(output);
+                total = 20;
             }
         }
     }
