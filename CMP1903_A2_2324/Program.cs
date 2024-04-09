@@ -9,10 +9,8 @@ namespace CMP1903_A2_2324
         /// </summary>
         static void Main(string[] args)
         {
-            // SevensOut sevensOut = new SevensOut();
-            // sevensOut.Play();
-            ThreeOrMore threeOrMore = new ThreeOrMore();
-            threeOrMore.Play();
+            // Game game = new Game();
+            // game.Menu();
             Console.ReadKey();
         }
     }
