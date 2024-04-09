@@ -8,24 +8,24 @@ namespace CMP1903_A2_2324
 {
     internal class SevensOut : Game
     {
-        Die dice1 = new Die();
-        Die dice2 = new Die();
-        List<int> rolls = new List<int>();
 
-        public void Play()
+        public SevensOut()
+        {
+            Play();
+        }
+
+        private void Play()
         {
             bool done = false;
             int total = 0;
             while (!done)
             {
-                int rolledNumber1 = dice1.Roll();
-                int rolledNumber2 = dice2.Roll();
-                int sum = rolledNumber1 + rolledNumber2;
+                int sum = 0;
                 if (sum == 7)
                 {
                     done = true;
                 }
-                else if (rolledNumber1 == rolledNumber2)
+                else if (sum == 2)
                 {
                     total = total + (sum * 2);
                 }
@@ -34,11 +34,10 @@ namespace CMP1903_A2_2324
                 {
                     total = total + sum;
                 }
-                Console.WriteLine($"Rolled number 1 is {rolledNumber1}");
-                Console.WriteLine($"Rolled number 2 is {rolledNumber2}");
+                Console.WriteLine($"Rolled number 1 is {sum}");
+                Console.WriteLine($"Rolled number 2 is {sum}");
                 Console.WriteLine($"The sum is {sum}");
                 Console.WriteLine($"The total is {total}");
-                Console.WriteLine();
             }
             Console.WriteLine($"The final total is {total}");
         }

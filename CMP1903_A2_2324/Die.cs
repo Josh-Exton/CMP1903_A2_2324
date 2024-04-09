@@ -5,7 +5,7 @@ namespace CMP1903_A2_2324
     internal class Die
     {
         // Creating the random field
-        private static readonly Random rand = new Random();
+        Random rand = new Random();
         // Creating the number field
         private int _num;
 
@@ -23,7 +23,7 @@ namespace CMP1903_A2_2324
         /// </summary>
         public Die()
         {
-            // initizling the random 
+            //initizling the random 
             _num = Roll();
         }
 
@@ -35,11 +35,6 @@ namespace CMP1903_A2_2324
         {
             // Asaigns a random number between 1 and 6
             int num = rand.Next(1,7);
-                        // Making sure it is between 1 and 6
-            while (num < 1 || num > 7)
-            {
-                num = rand.Next(1, 7);
-            }
             return num;
         }
     }
