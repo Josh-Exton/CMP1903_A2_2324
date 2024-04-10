@@ -62,5 +62,15 @@ namespace CMP1903_A2_2324
             Console.WriteLine("5: exit");
         }
 
+        protected List<object> DiceList(int length)
+        {
+            List<object> list = new List<object>();
+            for (int i = 0; i < length; i++)
+            { 
+                Die die = new Die();
+                list.Add(die);
+            }
+            return list;
+        }
     }
 }

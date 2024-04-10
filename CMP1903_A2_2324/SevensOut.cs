@@ -6,24 +6,28 @@ using System.Threading.Tasks;
 
 namespace CMP1903_A2_2324
 {
-    internal class SevensOut : Game
+    internal class SevensOut : Game, IPlayable
     {
-
         public SevensOut()
         {
             Play();
         }
 
-        private void Play()
+        public void Play()
         {
+            List<object> rolls = DiceList(2);
             bool done = false;
             int total = 0;
             while (!done)
             {
                 int sum = 0;
+                foreach (object roll in rolls) 
+                { 
+                    // sum = sum + roll.get properity or roll
+                }
                 if (sum == 7)
                 {
-                    done = true;
+                    break;
                 }
                 else if (sum == 2)
                 {

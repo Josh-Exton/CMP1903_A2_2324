@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace CMP1903_A2_2324
 {
-    internal class ThreeOrMore : Game
+    internal class ThreeOrMore : Game, IPlayable
     {
         public ThreeOrMore() 
         {
             Play();
         }
-        private void Play()
+        public void Play()
         {
+            List<object> rolls = DiceList(5);
             int total = 0;
             while (total < 20)
             {
                 total++;
             }
         }
-
     }
 }
