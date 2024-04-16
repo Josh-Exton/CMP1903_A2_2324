@@ -15,11 +15,18 @@ namespace CMP1903_A2_2324
         }
         public void Play()
         {
-            List<object> rolls = DiceList(5);
+            List<Die> rolls = DiceList(5);
+            List<int> numList = new List<int>(5);
             int total = 0;
             while (total < 20)
             {
-                total++;
+                for (int i = 0; i < rolls.Count; i++) 
+                {
+                    numList.Insert(i, rolls[i].Roll());
+                }
+                var duplicates = from n in numList where n > 0 select n;
+                Console.WriteLine(duplicates.GetType());
+                Console.ReadLine();
             }
         }
     }

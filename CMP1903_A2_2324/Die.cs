@@ -5,7 +5,7 @@ namespace CMP1903_A2_2324
     internal class Die
     {
         // Creating the random field
-        Random rand = new Random();
+        private static Random rand;
         // Creating the number field
         private int _num;
 
@@ -23,6 +23,7 @@ namespace CMP1903_A2_2324
         /// </summary>
         public Die()
         {
+            rand = new Random();
             //initizling the random 
             _num = Roll();
         }

@@ -15,21 +15,29 @@ namespace CMP1903_A2_2324
 
         public void Play()
         {
-            List<object> rolls = DiceList(2);
+            List<Die> rolls = DiceList(2);
             bool done = false;
+            int num1;
+            int num2;
+            int sum;
             int total = 0;
             while (!done)
             {
-                int sum = 0;
-                foreach (object roll in rolls) 
-                { 
-                    // sum = sum + roll.get properity or roll
-                }
+                Console.WriteLine();
+
+                num1 = rolls[0].Roll();
+                num2 = rolls[1].Roll();
+                sum = num1 + num2;
+
+                Console.WriteLine($"Rolled number 1 is {num1}");
+                Console.WriteLine($"Rolled number 2 is {num2}");
+                Console.WriteLine($"The sum is {sum}");
+
                 if (sum == 7)
                 {
                     break;
                 }
-                else if (sum == 2)
+                else if (num1 == num2)
                 {
                     total = total + (sum * 2);
                 }
@@ -38,11 +46,9 @@ namespace CMP1903_A2_2324
                 {
                     total = total + sum;
                 }
-                Console.WriteLine($"Rolled number 1 is {sum}");
-                Console.WriteLine($"Rolled number 2 is {sum}");
-                Console.WriteLine($"The sum is {sum}");
                 Console.WriteLine($"The total is {total}");
             }
+            Console.WriteLine();
             Console.WriteLine($"The final total is {total}");
         }
     }

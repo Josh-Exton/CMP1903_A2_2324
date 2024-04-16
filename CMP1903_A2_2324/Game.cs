@@ -34,7 +34,7 @@ namespace CMP1903_A2_2324
                 }
                 else if (choice == "3")
                 { 
-                    Statistics statistics = new Statistics();
+                    // Statistics statistics = new Statistics();
                     DisplayOptions();
                 }
                 else if (choice == "4")
@@ -62,13 +62,12 @@ namespace CMP1903_A2_2324
             Console.WriteLine("5: exit");
         }
 
-        protected List<object> DiceList(int length)
+        protected List<Die> DiceList(int length)
         {
-            List<object> list = new List<object>();
+            List<Die> list = new List<Die>();
             for (int i = 0; i < length; i++)
             { 
-                Die die = new Die();
-                list.Add(die);
+                list.Add(new Die());
             }
             return list;
         }
