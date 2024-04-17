@@ -25,7 +25,7 @@ namespace CMP1903_A2_2324
         {
             rand = new Random();
             //initizling the random 
-            _num = Roll();
+            Roll();
         }
 
         /// <summary>
@@ -36,6 +36,9 @@ namespace CMP1903_A2_2324
         {
             // Asaigns a random number between 1 and 6
             int num = rand.Next(1,7);
+            // Keeps the propity updated
+            _num = num;
+            // returns the number
             return num;
         }
     }

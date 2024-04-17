@@ -33,8 +33,8 @@ namespace CMP1903_A2_2324
                     DisplayOptions();
                 }
                 else if (choice == "3")
-                { 
-                    // Statistics statistics = new Statistics();
+                {
+                    Statistics.DisplayStatistics();
                     DisplayOptions();
                 }
                 else if (choice == "4")

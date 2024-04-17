@@ -10,6 +10,7 @@ namespace CMP1903_A2_2324
     {
         public SevensOut()
         {
+            Statistics.SevensOutPlaysUpdate();
             Play();
         }
 
@@ -31,6 +32,8 @@ namespace CMP1903_A2_2324
 
                 Console.WriteLine($"Rolled number 1 is {num1}");
                 Console.WriteLine($"Rolled number 2 is {num2}");
+                Console.WriteLine($"Propity 1 is {rolls[0].Num}");
+                Console.WriteLine($"Propity 2 is {rolls[1].Num}");
                 Console.WriteLine($"The sum is {sum}");
 
                 if (sum == 7)
@@ -50,6 +53,7 @@ namespace CMP1903_A2_2324
             }
             Console.WriteLine();
             Console.WriteLine($"The final total is {total}");
+            Statistics.SevensOutHighScoreUpdate(total);
         }
     }
 }

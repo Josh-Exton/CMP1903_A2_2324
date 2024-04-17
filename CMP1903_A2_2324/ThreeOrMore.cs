@@ -11,6 +11,7 @@ namespace CMP1903_A2_2324
     {
         public ThreeOrMore() 
         {
+            Statistics.ThreeOrMorePlaysUpdate();
             Play();
         }
         public void Play()
@@ -25,8 +26,7 @@ namespace CMP1903_A2_2324
                     numList.Insert(i, rolls[i].Roll());
                 }
                 var duplicates = from n in numList where n > 0 select n;
-                Console.WriteLine(duplicates.GetType());
-                Console.ReadLine();
+                break;
             }
         }
     }
