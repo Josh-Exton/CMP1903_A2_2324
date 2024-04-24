@@ -23,42 +23,36 @@ namespace CMP1903_A2_2324
         public void Play()
         {
             Die[] rolls = DiceArray(5);
-            int[] numList = new int[5];
             int player1Total = 0;
             int otherTotal = 0;
             int turn = 1;
-            while ((player1Total < 20) || (otherTotal < 20))
+            while ((player1Total < 20) && (otherTotal < 20))
             {
                 Console.WriteLine();
-                for (int i = 0; i < rolls.Length; i++) 
-                {
-                    numList[i] = rolls[i].Num;
-                }
-
 
                 Console.Write("The numbers you rolled are - ");
-                foreach (int i in numList)
+                foreach (Die dice in rolls)
                 {
-                    Console.Write($"{i} ");
+                    Console.Write($"{dice.Num} ");
                 }
 
                 Console.WriteLine();
-                int counter = 4;
 
-                List<int> duplicates = new List<int> ();
+                int counter = 5;
+ 
+                List<Die> duplicates = new List<Die> ();
 
                 while ((duplicates.Count == 0) && (counter > 1))
                 {
-
-                    duplicates = (from num in numList
-                                 group num by num into g
+                    duplicates = (from die in rolls
+                                 group die by die.Num into g
                                  where g.Count() >= counter
-                                 select g.Key)
-                                .ToList();
+                                 from dice in g
+                                 select dice).
+                                 ToList();
 
                     counter--;
                 }
-
 
                 // Checks if the counter one less than it should be because it is always decremented
                 if (counter == 1)
@@ -73,22 +67,20 @@ namespace CMP1903_A2_2324
                         choice = Console.ReadLine().Trim();
                         if (choice == "1")
                         {
-                            for (int i = 0; i < rolls.Length; i++)
+                            foreach (Die dice in rolls)
                             {
-                                numList[i] = rolls[i].Roll();
-                                Console.WriteLine($"i is {i}");
+                                dice.Roll();
                             }
                             done = true;
                         }
 
                         else if (choice == "2")
                         {
-                            for (int i = 0; i < rolls.Length; i++)
+                            foreach (Die dice in rolls)
                             {
-                                Console.WriteLine($"Duplicates 0 is {duplicates[0]}");
-                                if (duplicates[0] == numList[i])
+                                if (dice.Num != duplicates[0].Num)
                                 {
-                                    numList[i] = rolls[i].Roll();
+                                    dice.Roll();
                                 }
                             }
                             done = true;
@@ -101,19 +93,27 @@ namespace CMP1903_A2_2324
 
                     Console.Write("The numbers you rolled are - ");
 
-                    foreach (int i in numList)
+                    foreach (Die dice in rolls)
                     {
-                        Console.Write($"{i} ");
+                        Console.Write($"{dice.Num} ");
                     }
 
+                    Console.ReadLine();
+
+                    Console.WriteLine();
+
                     counter = 5;
+                    duplicates.Clear();
+
                     while ((duplicates.Count == 0) && (counter > 1))
                     {
-                        duplicates = (from num in numList
-                                      group num by num into g
+                        duplicates = (from die in rolls
+                                      group die by die.Num into g
                                       where g.Count() >= counter
-                                      select g.Key)
-                                     .ToList();
+                                      from dice in g
+                                      select dice).
+                                      ToList();
+
                         counter--;
                     }
                 }
@@ -122,14 +122,17 @@ namespace CMP1903_A2_2324
                     if (counter == 2)
                     {
                         player1Total = player1Total + 3;
+                        Console.WriteLine("Player 1 just scored 3 point");
                     }
                     else if (counter == 3)
                     {
                         player1Total = player1Total + 6;
+                        Console.WriteLine("Player 1 just scored 6 point");
                     }
                     else if (counter == 4)
                     {
                         player1Total = player1Total + 12;
+                        Console.WriteLine("Player 1 just scored 12 point");
                     }
                     Console.WriteLine($"Player 1 total is {player1Total}");
                 }
@@ -138,15 +141,15 @@ namespace CMP1903_A2_2324
                 {
                     if (counter == 2)
                     {
-                        player1Total = player1Total + 3;
+                        otherTotal = otherTotal + 3;
                     }
                     else if (counter == 3)
                     {
-                        player1Total = player1Total + 6;
+                        otherTotal = otherTotal + 6;
                     }
                     else if (counter == 4)
                     {
-                        player1Total = player1Total + 12;
+                        otherTotal = otherTotal + 12;
                     }
                     if (_mode == "player")
                     {
@@ -158,10 +161,11 @@ namespace CMP1903_A2_2324
                     }
                 }
 
-                foreach (Die i in rolls)
+                foreach (Die dice in rolls)
                 {
-                    i.Roll();
+                    dice.Roll();
                 }
+
                 turn++;
             }
             if ((turn % 2) == 1)

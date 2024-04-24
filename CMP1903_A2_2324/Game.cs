@@ -60,6 +60,7 @@ namespace CMP1903_A2_2324
             bool modeDone = false;
             string modeChoice;
             string mode = "";
+            Console.WriteLine();
             Console.WriteLine("Please select what you want to do from the options below");
             Console.WriteLine("1: play 2 player mode");
             Console.WriteLine("2: play vs computer");
