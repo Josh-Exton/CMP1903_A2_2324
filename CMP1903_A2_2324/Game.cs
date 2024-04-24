@@ -8,39 +8,31 @@ namespace CMP1903_A2_2324
 {
     internal class Game
     {
-        static Game() 
-        {
-            Console.WriteLine("Constructer");
-            Menu();
-        }
-
-        static private void Menu()
+        public void Menu()
         {
             bool done = false;
             string choice;
-            DisplayOptions();
             while (done == false)
             {
+                DisplayOptions();
                 choice = Console.ReadLine().Trim();
                 if (choice == "1")
                 {
-                    SevensOut sevensOut = new SevensOut();
-                    DisplayOptions();
+                    string mode = DisplayModeOptions();
+                    SevensOut sevensOut = new SevensOut(mode);
                 }
                 else if (choice == "2")
                 {
-                    ThreeOrMore threeOrMore = new ThreeOrMore();
-                    DisplayOptions();
+                    string mode = DisplayModeOptions();
+                    ThreeOrMore threeOrMore = new ThreeOrMore(mode);
                 }
                 else if (choice == "3")
                 {
                     Statistics.DisplayStatistics();
-                    DisplayOptions();
                 }
                 else if (choice == "4")
                 {
                     Testing testing = new Testing();
-                    DisplayOptions();
                 }
                 else if (choice == "5")
                 {
@@ -50,9 +42,10 @@ namespace CMP1903_A2_2324
                 {
                     Console.WriteLine("Invalid choice. Please select again.");
                 }
+                Console.WriteLine();
             }
         }
-        static private void DisplayOptions()
+        private void DisplayOptions()
         {
             Console.WriteLine("Please select what you want to do from the options below");
             Console.WriteLine("1: play sevens out");
@@ -62,14 +55,45 @@ namespace CMP1903_A2_2324
             Console.WriteLine("5: exit");
         }
 
-        protected List<Die> DiceList(int length)
+        private string DisplayModeOptions()
         {
-            List<Die> list = new List<Die>();
-            for (int i = 0; i < length; i++)
-            { 
-                list.Add(new Die());
+            bool modeDone = false;
+            string modeChoice;
+            string mode = "";
+            Console.WriteLine("Please select what you want to do from the options below");
+            Console.WriteLine("1: play 2 player mode");
+            Console.WriteLine("2: play vs computer");
+            while (!modeDone)
+            {
+                modeChoice = Console.ReadLine().Trim();
+                if (modeChoice == "1")
+                {
+                    mode = "player";
+                    modeDone = true;
+                }
+                else if (modeChoice == "2")
+                {
+                    mode = "computer";
+                    modeDone = true;
+                }
+                else
+                {
+                    Console.WriteLine("Please select one of the options");
+                    Console.WriteLine();
+                }
             }
-            return list;
+
+            return mode;
+        }
+
+        protected Die[] DiceArray(int length)
+        {
+            Die[] array = new Die[length];
+            for (int i = 0; i < length; i++)
+            {
+                array[i] = new Die();
+            }
+            return array;
         }
     }
 }

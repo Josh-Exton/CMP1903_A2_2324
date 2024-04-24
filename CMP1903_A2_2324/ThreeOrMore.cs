@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
 using System.Text;
@@ -11,24 +13,28 @@ namespace CMP1903_A2_2324
 {
     internal class ThreeOrMore : Game, IPlayable
     {
-        public ThreeOrMore() 
+        private string _mode;
+        public ThreeOrMore(string mode) 
         {
             Statistics.ThreeOrMorePlaysUpdate();
+            _mode = mode;
             Play();
         }
         public void Play()
         {
-            Console.WriteLine();
-            List<Die> rolls = DiceList(5);
-            List<int> numList = new List<int>(5);
-            int total = 0;
-            while (total < 20)
+            Die[] rolls = DiceArray(5);
+            int[] numList = new int[5];
+            int player1Total = 0;
+            int otherTotal = 0;
+            int turn = 1;
+            while ((player1Total < 20) || (otherTotal < 20))
             {
-
-                for (int i = 0; i < rolls.Count; i++) 
+                Console.WriteLine();
+                for (int i = 0; i < rolls.Length; i++) 
                 {
-                    numList.Insert(i, rolls[i].Roll());
+                    numList[i] = rolls[i].Num;
                 }
+
 
                 Console.Write("The numbers you rolled are - ");
                 foreach (int i in numList)
@@ -37,18 +43,22 @@ namespace CMP1903_A2_2324
                 }
 
                 Console.WriteLine();
+                int counter = 4;
+
                 List<int> duplicates = new List<int> ();
 
-                int counter = 5;
-                while ((duplicates.Count() == 0) && (counter > 1))
+                while ((duplicates.Count == 0) && (counter > 1))
                 {
-                    duplicates = numList
-                    .GroupBy(x => x)
-                    .Where(g => g.Count() >= counter)
-                    .Select(g => g.Key)
-                    .ToList();
+
+                    duplicates = (from num in numList
+                                 group num by num into g
+                                 where g.Count() >= counter
+                                 select g.Key)
+                                .ToList();
+
                     counter--;
                 }
+
 
                 // Checks if the counter one less than it should be because it is always decremented
                 if (counter == 1)
@@ -63,41 +73,25 @@ namespace CMP1903_A2_2324
                         choice = Console.ReadLine().Trim();
                         if (choice == "1")
                         {
-                            foreach (int i in numList)
+                            for (int i = 0; i < rolls.Length; i++)
                             {
-                                numList.Insert(i, rolls[i].Roll());
-                                counter = 5;
-                                while ((duplicates.Count() == 0) && (counter > 1))
-                                {
-                                    duplicates = numList
-                                    .GroupBy(x => x)
-                                    .Where(g => g.Count() >= counter)
-                                    .Select(g => g.Key)
-                                    .ToList();
-                                    counter--;
-                                }
+                                numList[i] = rolls[i].Roll();
+                                Console.WriteLine($"i is {i}");
                             }
+                            done = true;
                         }
 
                         else if (choice == "2")
                         {
-                            foreach (int i in numList)
+                            for (int i = 0; i < rolls.Length; i++)
                             {
+                                Console.WriteLine($"Duplicates 0 is {duplicates[0]}");
                                 if (duplicates[0] == numList[i])
                                 {
-                                    numList.Insert(i, rolls[i].Roll());
+                                    numList[i] = rolls[i].Roll();
                                 }
                             }
-                            counter = 4;
-                            while ((duplicates.Count() == 0) && (counter > 0))
-                            {
-                                duplicates = numList
-                                .GroupBy(x => x)
-                                .Where(g => g.Count() > counter)
-                                .Select(g => g.Key)
-                                .ToList();
-                                counter--;
-                            }
+                            done = true;
                         }
                         else
                         {
@@ -106,27 +100,82 @@ namespace CMP1903_A2_2324
                     }
 
                     Console.Write("The numbers you rolled are - ");
+
                     foreach (int i in numList)
                     {
                         Console.Write($"{i} ");
                     }
+
+                    counter = 5;
+                    while ((duplicates.Count == 0) && (counter > 1))
+                    {
+                        duplicates = (from num in numList
+                                      group num by num into g
+                                      where g.Count() >= counter
+                                      select g.Key)
+                                     .ToList();
+                        counter--;
+                    }
+                }
+                if ((turn % 2) == 1)
+                {
+                    if (counter == 2)
+                    {
+                        player1Total = player1Total + 3;
+                    }
+                    else if (counter == 3)
+                    {
+                        player1Total = player1Total + 6;
+                    }
+                    else if (counter == 4)
+                    {
+                        player1Total = player1Total + 12;
+                    }
+                    Console.WriteLine($"Player 1 total is {player1Total}");
                 }
 
-                if (counter == 2)
+                else
                 {
-                    total = total + 3;
+                    if (counter == 2)
+                    {
+                        player1Total = player1Total + 3;
+                    }
+                    else if (counter == 3)
+                    {
+                        player1Total = player1Total + 6;
+                    }
+                    else if (counter == 4)
+                    {
+                        player1Total = player1Total + 12;
+                    }
+                    if (_mode == "player")
+                    {
+                        Console.WriteLine($"Player 2 total is {otherTotal}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"computers total is {otherTotal}");
+                    }
                 }
-                if (counter == 3)
-                { 
-                    total = total + 6;
+
+                foreach (Die i in rolls)
+                {
+                    i.Roll();
                 }
-                if(counter == 4) 
-                { 
-                    total = total + 12;
-                }
-                Console.WriteLine(counter + 1);
-                Console.WriteLine(total);
-                Console.ReadLine();
+                turn++;
+            }
+            if ((turn % 2) == 1)
+            {
+                Console.WriteLine("Player 1 wins");
+            }
+            else if ((turn % 2) == 0 && (_mode == "player"))
+            {
+                Console.WriteLine("Player 2 wins");
+            }
+
+            else
+            {
+                Console.WriteLine("computer wins");
             }
         }
     }
