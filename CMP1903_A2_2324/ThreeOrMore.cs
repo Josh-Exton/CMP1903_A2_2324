@@ -13,14 +13,6 @@ namespace CMP1903_A2_2324
 {
     internal sealed class ThreeOrMore : Game, IPlayable
     {
-        private string _mode;
-
-        private string Mode
-        {
-            get { return _mode; }
-            set { _mode = value; }
-        }
-
         public ThreeOrMore(string mode) 
         {
             Statistics.ThreeOrMorePlaysUpdate();

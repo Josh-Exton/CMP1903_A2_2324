@@ -9,8 +9,7 @@ namespace CMP1903_A2_2324
         /// </summary>
         static void Main(string[] args)
         {
-            Game game = new Game();
-            game.Menu();
+            Menu menu = new Menu();
             Console.ReadKey();
         }
     }
