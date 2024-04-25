@@ -5,11 +5,15 @@ namespace CMP1903_A2_2324
 {
     internal class Testing
     {
+
         /// <summary>
         /// Creating the die and game objects
         /// </summary>
         Die dice = new Die();
         Game game = new Game();
+        SevensOut sevensOut = new SevensOut("computer");
+        ThreeOrMore threeOrMore = new ThreeOrMore("computer");
+
 
         public Testing() 
         {

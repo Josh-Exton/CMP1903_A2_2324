@@ -11,25 +11,33 @@ using System.Threading.Tasks;
 
 namespace CMP1903_A2_2324
 {
-    internal class ThreeOrMore : Game, IPlayable
+    internal sealed class ThreeOrMore : Game, IPlayable
     {
         private string _mode;
+
+        private string Mode
+        {
+            get { return _mode; }
+            set { _mode = value; }
+        }
+
         public ThreeOrMore(string mode) 
         {
             Statistics.ThreeOrMorePlaysUpdate();
-            _mode = mode;
+            Mode = mode;
             Play();
         }
+
         public void Play()
         {
             Die[] rolls = DiceArray(5);
             int player1Total = 0;
             int otherTotal = 0;
-            int turn = 1;
+            long turn = 1;
             while ((player1Total < 20) && (otherTotal < 20))
             {
                 Console.WriteLine();
-
+                 
                 Console.Write("The numbers you rolled are - ");
                 foreach (Die dice in rolls)
                 {
@@ -64,7 +72,17 @@ namespace CMP1903_A2_2324
                         Console.WriteLine("Please select what you want to do from the options below");
                         Console.WriteLine("1: Reroll all dice");
                         Console.WriteLine("2: Reroll remaining dice");
-                        choice = Console.ReadLine().Trim();
+                        if ((turn % 2 == 0) && (Mode == "computer"))
+                        { 
+                            choice = "2";
+                        }
+                        else
+                        {
+                            choice = Console.ReadLine().Trim();
+                        }
+
+                        Console.WriteLine();
+
                         if (choice == "1")
                         {
                             foreach (Die dice in rolls)
@@ -87,7 +105,7 @@ namespace CMP1903_A2_2324
                         }
                         else
                         {
-                            Console.WriteLine("Please enter one of the options");
+                            Console.WriteLine("Invalid choice. Please select again.");
                         }
                     }
 
@@ -97,8 +115,6 @@ namespace CMP1903_A2_2324
                     {
                         Console.Write($"{dice.Num} ");
                     }
-
-                    Console.ReadLine();
 
                     Console.WriteLine();
 
@@ -117,6 +133,7 @@ namespace CMP1903_A2_2324
                         counter--;
                     }
                 }
+
                 if ((turn % 2) == 1)
                 {
                     if (counter == 2)
@@ -137,28 +154,44 @@ namespace CMP1903_A2_2324
                     Console.WriteLine($"Player 1 total is {player1Total}");
                 }
 
-                else
+                else if ((turn % 2) == 0 && (Mode == "player"))
                 {
                     if (counter == 2)
                     {
                         otherTotal = otherTotal + 3;
+                        Console.WriteLine("Player 2 just scored 3 point");
                     }
                     else if (counter == 3)
                     {
                         otherTotal = otherTotal + 6;
+                        Console.WriteLine("Player 2 just scored 6 point");
                     }
                     else if (counter == 4)
                     {
                         otherTotal = otherTotal + 12;
+                        Console.WriteLine("Player 2 just scored 12 point");
                     }
-                    if (_mode == "player")
+                    Console.WriteLine($"Player 2 total is {otherTotal}");
+                }
+
+                else 
+                {
+                    if (counter == 2)
                     {
-                        Console.WriteLine($"Player 2 total is {otherTotal}");
+                        otherTotal = otherTotal + 3;
+                        Console.WriteLine("Computer just scored 3 point");
                     }
-                    else
+                    else if (counter == 3)
                     {
-                        Console.WriteLine($"computers total is {otherTotal}");
+                        otherTotal = otherTotal + 6;
+                        Console.WriteLine("Computer just scored 6 point");
                     }
+                    else if (counter == 4)
+                    {
+                        otherTotal = otherTotal + 12;
+                        Console.WriteLine("Computer just scored 12 point");
+                    }
+                    Console.WriteLine($"Computer total is {otherTotal}");
                 }
 
                 foreach (Die dice in rolls)
@@ -168,18 +201,29 @@ namespace CMP1903_A2_2324
 
                 turn++;
             }
+
             if ((turn % 2) == 1)
             {
                 Console.WriteLine("Player 1 wins");
+                Statistics.player1WinsUpdate();
             }
-            else if ((turn % 2) == 0 && (_mode == "player"))
+
+            else if ((turn % 2) == 0 && (Mode == "player"))
             {
                 Console.WriteLine("Player 2 wins");
+                Statistics.player2WinsUpdate();
+            }
+
+            else if ((turn % 2) == 0 && (Mode == "computer"))
+            {
+                Console.WriteLine("computer wins");
+                Statistics.computerWinsUpdate();
             }
 
             else
             {
-                Console.WriteLine("computer wins");
+                Console.WriteLine("The game was a draw");
+                Statistics.drawUpdate();
             }
         }
     }

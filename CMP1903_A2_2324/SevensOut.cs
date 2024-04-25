@@ -6,23 +6,30 @@ using System.Threading.Tasks;
 
 namespace CMP1903_A2_2324
 {
-    internal class SevensOut : Game, IPlayable
+    internal sealed class SevensOut : Game, IPlayable
     {
         private string _mode;
+
+        private string Mode
+        {
+            get { return _mode; }
+            set { _mode = value; }
+        }
+
         public SevensOut(string mode)
         {
             Statistics.SevensOutPlaysUpdate();
-            _mode = mode;
+            Mode = mode;
             Play();
         }
 
-        public void Play()
+        public void Play()  
         {
             Die[] rolls = DiceArray(2);
             int sum;
-            int player1Score = 0;
-            int otherScore = 0;
-            int total = 0;
+            long player1Score = 0;
+            long otherScore = 0;
+            long total = 0;
             for (int i = 1; i <= 2; i++)
             {
                 bool done = false;
@@ -32,22 +39,27 @@ namespace CMP1903_A2_2324
                     sum = rolls[0].Num + rolls[1].Num;
                     Console.WriteLine($"Rolled number 1 is {rolls[0].Num}");
                     Console.WriteLine($"Rolled number 2 is {rolls[1].Num}");
-                    Console.WriteLine($"The sum is {sum}");
 
                     if (sum == 7)
                     {
+                        Console.WriteLine($"The sum is {sum}");
                         done = true;
                     }
                     else if (rolls[0].Num == rolls[1].Num)
                     {
-                        total = total + (sum * 2);
+                        sum = sum * 2;
+                        total = total + sum;
+                        Console.WriteLine($"The sum is {sum}");
                     }
 
                     else
                     {
                         total = total + sum;
+                        Console.WriteLine($"The sum is {sum}");
                     }
+
                     Console.WriteLine($"The total is {total}");
+
                     foreach (Die dice in rolls)
                     {
                         dice.Roll();
@@ -71,19 +83,20 @@ namespace CMP1903_A2_2324
                 Console.WriteLine("Player 1 wins");
                 Statistics.player1WinsUpdate();
             }
-            else if ((player1Score < otherScore) && (_mode == "player"))
+            else if ((player1Score < otherScore) && (Mode == "player"))
             {
                 Console.WriteLine("Player 2 wins");
                 Statistics.player2WinsUpdate();
             }
-            else if ((player1Score < otherScore) && (_mode == "computer"))
+            else if ((player1Score < otherScore) && (Mode == "computer"))
             {
                 Console.WriteLine("Computer wins");
-                Statistics.computerwinsUpdate();
+                Statistics.computerWinsUpdate();
             }
             else 
             {
                 Console.WriteLine("The game was a draw");
+                Statistics.drawUpdate();
             }
         }
     }

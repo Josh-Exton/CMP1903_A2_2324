@@ -15,7 +15,7 @@ namespace CMP1903_A2_2324
         public int Num
         {
             get { return _num; }
-            set { _num = value; }
+            private set { _num = value; }
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace CMP1903_A2_2324
             // Asaigns a random number between 1 and 6
             int num = rand.Next(1,7);
             // Keeps the propity updated
-            _num = num;
+            Num = num;
             // returns the number
             return num;
         }
