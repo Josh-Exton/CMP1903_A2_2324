@@ -17,13 +17,14 @@ namespace CMP1903_A2_2324
             set { _mode = value; } 
         }
 
-        public Game() 
-        { 
-            Menu menu = new Menu();
-        }
-
         protected Die[] DiceArray(int length)
         {
+
+            if (length <= 0)
+            {
+                throw new ArgumentException("Length must be a positive integer.", nameof(length));
+            }
+
             Die[] array = new Die[length];
             for (int i = 0; i < length; i++)
             {

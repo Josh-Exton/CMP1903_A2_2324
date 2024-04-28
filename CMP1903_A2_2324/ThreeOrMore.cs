@@ -17,7 +17,6 @@ namespace CMP1903_A2_2324
         {
             Statistics.ThreeOrMorePlaysUpdate();
             Mode = mode;
-            Play();
         }
 
         public void Play()

@@ -8,7 +8,6 @@ namespace CMP1903_A2_2324
 {
     internal class Menu
     {
-
         public Menu() 
         {
             DisplayMenu();
@@ -26,11 +25,13 @@ namespace CMP1903_A2_2324
                 {
                     string mode = DisplayModeOptions();
                     SevensOut sevensOut = new SevensOut(mode);
+                    sevensOut.Play();
                 }
                 else if (choice == "2")
                 {
                     string mode = DisplayModeOptions();
                     ThreeOrMore threeOrMore = new ThreeOrMore(mode);
+                    threeOrMore.Play();
                 }
                 else if (choice == "3")
                 {
@@ -72,6 +73,8 @@ namespace CMP1903_A2_2324
             while ((mode != "player") || (mode != "computer"))
             {
                 modeChoice = Console.ReadLine().Trim();
+                Console.WriteLine(modeChoice);
+
                 if (modeChoice == "1")
                 {
                     mode = "player";

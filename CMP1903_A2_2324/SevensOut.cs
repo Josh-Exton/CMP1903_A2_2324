@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading.Tasks.Sources;
 
 namespace CMP1903_A2_2324
 {
@@ -13,80 +15,76 @@ namespace CMP1903_A2_2324
         {
             Statistics.SevensOutPlaysUpdate();
             Mode = mode;
-            Play();
         }
 
-        public void Play()  
+        public void Play()
         {
+            long player1Score = PlayRound();
+            long otherScore = PlayRound();
+
+            DetermineWinner(player1Score, otherScore);
+        }
+
+        private long PlayRound()
+        {
+            bool done = false;
             Die[] rolls = DiceArray(2);
-            int sum;
-            long player1Score = 0;
-            long otherScore = 0;
             long total = 0;
-            for (int i = 1; i <= 2; i++)
+            while (!done) 
             {
-                bool done = false;
-                while (!done)
+                int sum = rolls[0].Num + rolls[1].Num;
+
+                Console.WriteLine($"Rolled number 1 is {rolls[0].Num}");
+                Console.WriteLine($"Rolled number 2 is {rolls[1].Num}");
+                Console.WriteLine($"The sum is {sum}");
+
+                if (sum == 7)
                 {
-                    Console.WriteLine();
-                    sum = rolls[0].Num + rolls[1].Num;
-                    Console.WriteLine($"Rolled number 1 is {rolls[0].Num}");
-                    Console.WriteLine($"Rolled number 2 is {rolls[1].Num}");
-
-                    if (sum == 7)
-                    {
-                        Console.WriteLine($"The sum is {sum}");
-                        done = true;
-                    }
-                    else if (rolls[0].Num == rolls[1].Num)
-                    {
-                        sum = sum * 2;
-                        total = total + sum;
-                        Console.WriteLine($"The sum is {sum}");
-                    }
-
-                    else
-                    {
-                        total = total + sum;
-                        Console.WriteLine($"The sum is {sum}");
-                    }
-
-                    Console.WriteLine($"The total is {total}");
-
-                    foreach (Die dice in rolls)
-                    {
-                        dice.Roll();
-                    }
+                    break;
                 }
-                Console.WriteLine();
-                Console.WriteLine($"The final total is {total}");
-                Statistics.SevensOutHighScoreUpdate(total);
-                if (i == 1)
-                { 
-                    player1Score = total;
-                    total = 0;
-                }
-                if (i == 2) 
+
+                if (rolls[0].Num == rolls[1].Num)
                 {
-                    otherScore = total;
+                    sum *= 2;
+                }
+
+                total += sum;
+
+                Console.WriteLine($"The total is {total}");
+
+                foreach (Die die in rolls)
+                {
+                    die.Roll();
                 }
             }
-            if (player1Score > otherScore)
+            Console.WriteLine();
+            Console.WriteLine($"The final total is {total}");
+            Statistics.SevensOutHighScoreUpdate(total);
+
+            return total;            
+        }
+
+        private void DetermineWinner(long player1Score, long player2Score)
+        {
+            if (player1Score > player2Score)
             {
                 Console.WriteLine("Player 1 wins");
                 Statistics.player1WinsUpdate();
             }
-            else if ((player1Score < otherScore) && (Mode == "player"))
+            else if (player1Score < player2Score)
             {
-                Console.WriteLine("Player 2 wins");
-                Statistics.player2WinsUpdate();
+                if (Mode == "player")
+                {
+                    Console.WriteLine("Player 2 wins");
+                    Statistics.player2WinsUpdate();
+                }
+                else if (Mode == "computer")
+                {
+                    Console.WriteLine("Computer wins");
+                    Statistics.computerWinsUpdate();
+                }
             }
-            else if ((player1Score < otherScore) && (Mode == "computer"))
-            {
-                Console.WriteLine("Computer wins");
-                Statistics.computerWinsUpdate();
-            }
-            else 
+            else
             {
                 Console.WriteLine("The game was a draw");
                 Statistics.drawUpdate();
