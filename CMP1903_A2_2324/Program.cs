@@ -10,6 +10,7 @@ namespace CMP1903_A2_2324
         static void Main(string[] args)
         {
             Menu menu = new Menu();
+            menu.DisplayMenu();
             Console.ReadKey();
         }
     }

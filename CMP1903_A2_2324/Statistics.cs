@@ -58,8 +58,6 @@ namespace CMP1903_A2_2324
             private set { _draws = value; }
         }
 
-
-
         static public void SevensOutPlaysUpdate()
         {
             SevensOutPlays++;

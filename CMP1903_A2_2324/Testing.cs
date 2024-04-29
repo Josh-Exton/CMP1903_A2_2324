@@ -13,12 +13,6 @@ namespace CMP1903_A2_2324
         SevensOut sevensOut = new SevensOut("computer");
         ThreeOrMore threeOrMore = new ThreeOrMore("computer");
 
-
-        public Testing() 
-        {
-            DieCheck();
-        }
-
         // Checks the roll methods in the die class to see if returns a number between 1 and 6
         public void DieCheck()
         { 

@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 namespace CMP1903_A2_2324
 {
-    internal class Game
+    internal abstract class Game : IPlayable
     {
 
         private string _mode;
@@ -16,6 +16,8 @@ namespace CMP1903_A2_2324
             get { return _mode; }
             set { _mode = value; } 
         }
+
+        public abstract void Play();
 
         protected Die[] DiceArray(int length)
         {
@@ -30,6 +32,7 @@ namespace CMP1903_A2_2324
             {
                 array[i] = new Die();
             }
+
             return array;
         }
     }

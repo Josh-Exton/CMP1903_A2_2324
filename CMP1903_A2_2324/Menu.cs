@@ -10,10 +10,9 @@ namespace CMP1903_A2_2324
     {
         public Menu() 
         {
-            DisplayMenu();
         }
 
-        private void DisplayMenu()
+        public void DisplayMenu()
         {
             bool done = false;
             string choice;
@@ -40,6 +39,7 @@ namespace CMP1903_A2_2324
                 else if (choice == "4")
                 {
                     Testing testing = new Testing();
+                    testing.DieCheck();
                 }
                 else if (choice == "5")
                 {
@@ -70,25 +70,28 @@ namespace CMP1903_A2_2324
             Console.WriteLine("Please select what you want to do from the options below");
             Console.WriteLine("1: play 2 player mode");
             Console.WriteLine("2: play vs computer");
-            while ((mode != "player") || (mode != "computer"))
+            while ((mode != "player") && (mode != "computer"))
             {
                 modeChoice = Console.ReadLine().Trim();
                 Console.WriteLine(modeChoice);
-
                 if (modeChoice == "1")
                 {
                     mode = "player";
                 }
+
                 else if (modeChoice == "2")
                 {
                     mode = "computer";
                 }
+
                 else
                 {
                     Console.WriteLine("Invalid choice. Please select again.");
-                    Console.WriteLine();
                 }
+
+                Console.WriteLine();
             }
+
             return mode;
         }
     }

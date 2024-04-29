@@ -8,7 +8,7 @@ using System.Threading.Tasks.Sources;
 
 namespace CMP1903_A2_2324
 {
-    internal sealed class SevensOut : Game, IPlayable
+    internal sealed class SevensOut : Game
     {
 
         public SevensOut(string mode)
@@ -17,11 +17,21 @@ namespace CMP1903_A2_2324
             Mode = mode;
         }
 
-        public void Play()
+        public override void Play()
         {
+            Console.WriteLine("Player 1's turn");
             long player1Score = PlayRound();
-            long otherScore = PlayRound();
+            if (Mode == "player")
+            {
+                Console.WriteLine("Player 2's turn");
+            }
 
+            else if (Mode == "computer")
+            {
+                Console.WriteLine("computers turn turn");
+            }
+
+            long otherScore = PlayRound();
             DetermineWinner(player1Score, otherScore);
         }
 
@@ -46,21 +56,23 @@ namespace CMP1903_A2_2324
                 if (rolls[0].Num == rolls[1].Num)
                 {
                     sum *= 2;
+                    Console.WriteLine($"Your new sum is {sum}");
                 }
 
                 total += sum;
 
                 Console.WriteLine($"The total is {total}");
+                Console.WriteLine();
 
                 foreach (Die die in rolls)
                 {
                     die.Roll();
                 }
             }
-            Console.WriteLine();
+
             Console.WriteLine($"The final total is {total}");
             Statistics.SevensOutHighScoreUpdate(total);
-
+            Console.WriteLine();
             return total;            
         }
 
@@ -71,6 +83,7 @@ namespace CMP1903_A2_2324
                 Console.WriteLine("Player 1 wins");
                 Statistics.player1WinsUpdate();
             }
+
             else if (player1Score < player2Score)
             {
                 if (Mode == "player")
@@ -84,6 +97,7 @@ namespace CMP1903_A2_2324
                     Statistics.computerWinsUpdate();
                 }
             }
+
             else
             {
                 Console.WriteLine("The game was a draw");

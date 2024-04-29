@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CMP1903_A2_2324
 {
-    internal sealed class ThreeOrMore : Game, IPlayable
+    internal sealed class ThreeOrMore : Game
     {
         public ThreeOrMore(string mode) 
         {
@@ -19,7 +19,7 @@ namespace CMP1903_A2_2324
             Mode = mode;
         }
 
-        public void Play()
+        public override void Play()
         {
             Die[] rolls = DiceArray(5);
             int player1Total = 0;
@@ -94,6 +94,7 @@ namespace CMP1903_A2_2324
                             }
                             done = true;
                         }
+
                         else
                         {
                             Console.WriteLine("Invalid choice. Please select again.");
@@ -132,16 +133,19 @@ namespace CMP1903_A2_2324
                         player1Total = player1Total + 3;
                         Console.WriteLine("Player 1 just scored 3 point");
                     }
+
                     else if (counter == 3)
                     {
                         player1Total = player1Total + 6;
                         Console.WriteLine("Player 1 just scored 6 point");
                     }
+
                     else if (counter == 4)
                     {
                         player1Total = player1Total + 12;
                         Console.WriteLine("Player 1 just scored 12 point");
                     }
+
                     Console.WriteLine($"Player 1 total is {player1Total}");
                 }
 
@@ -152,16 +156,19 @@ namespace CMP1903_A2_2324
                         otherTotal = otherTotal + 3;
                         Console.WriteLine("Player 2 just scored 3 point");
                     }
+
                     else if (counter == 3)
                     {
                         otherTotal = otherTotal + 6;
                         Console.WriteLine("Player 2 just scored 6 point");
                     }
+
                     else if (counter == 4)
                     {
                         otherTotal = otherTotal + 12;
                         Console.WriteLine("Player 2 just scored 12 point");
                     }
+
                     Console.WriteLine($"Player 2 total is {otherTotal}");
                 }
 
@@ -172,16 +179,19 @@ namespace CMP1903_A2_2324
                         otherTotal = otherTotal + 3;
                         Console.WriteLine("Computer just scored 3 point");
                     }
+
                     else if (counter == 3)
                     {
                         otherTotal = otherTotal + 6;
                         Console.WriteLine("Computer just scored 6 point");
                     }
+
                     else if (counter == 4)
                     {
                         otherTotal = otherTotal + 12;
                         Console.WriteLine("Computer just scored 12 point");
                     }
+
                     Console.WriteLine($"Computer total is {otherTotal}");
                 }
 
