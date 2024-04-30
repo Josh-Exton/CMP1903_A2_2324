@@ -27,8 +27,7 @@ namespace CMP1903_A2_2324
                 {
                     string mode = DisplayModeOptions();
                     ThreeOrMore threeOrMore = new ThreeOrMore(mode);
-                    //threeOrMore.Play();
-                    threeOrMore.test();
+                    threeOrMore.Play();
                 }
                 else if (choice == "3")
                 {
