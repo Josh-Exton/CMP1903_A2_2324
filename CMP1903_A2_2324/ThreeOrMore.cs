@@ -10,16 +10,31 @@ using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Formats.Asn1.AsnWriter;
+using System.Xml.Serialization;
+
 
 namespace CMP1903_A2_2324
 {
     internal sealed class ThreeOrMore : Game
     {
+        /// <summary>
+        /// Updates the _Mode propertie to the parameter which needs to be "player" or "computer"
+        /// </summary>
+        /// <param name="mode">Playing againt a player or computer</param>
         public ThreeOrMore(string mode)
         {
             Statistics.ThreeOrMorePlaysUpdate();
-            Mode = mode;
+            mode = mode.ToLower();
+            mode = mode.Trim();
+            _Mode = mode;
+        }
+
+        /// <summary>
+        /// Mainly for testing and sets the _Mode to "computer"
+        /// </summary>
+        public ThreeOrMore()
+        {
+            _Mode = "computer";
         }
 
         public override void Play()
@@ -28,6 +43,7 @@ namespace CMP1903_A2_2324
             int otherTotal = 0;
             long turn = 1;
             Die[] rolls = DiceArray(5);
+
             while ((player1Total < 20) && (otherTotal < 20))
             {
                 if (turn % 2 == 1)
@@ -35,7 +51,7 @@ namespace CMP1903_A2_2324
                     Console.WriteLine($"Player 1 turn");
                 }
 
-                else if ((turn % 2 == 0) && (Mode == "player"))
+                else if ((turn % 2 == 0) && (_Mode == "player"))
                 {
                     Console.WriteLine($"Player 2 turn");
                 }
@@ -44,13 +60,14 @@ namespace CMP1903_A2_2324
                 {
                     Console.WriteLine($"The computers turn");
                 }
+
                 Console.WriteLine();
                 DisplayDice(rolls);
                 int duplicateValue = FindDuplicatesValue(rolls);
                 int duplicateCount = FindDuplicatesCount(rolls);
-                Console.WriteLine($"{duplicateValue} {duplicateCount}");
 
                 duplicateCount = CheckReroll(duplicateValue, duplicateCount, ref rolls, turn);
+
                 if (turn % 2 == 1)
                 {
                     player1Total = ScoreUpdate(duplicateCount, player1Total, 1);
@@ -68,9 +85,7 @@ namespace CMP1903_A2_2324
                 }
 
                 turn++;
-
                 Console.WriteLine();
-
             }
             DisplayWinner(turn);
         }
@@ -124,7 +139,7 @@ namespace CMP1903_A2_2324
                     Console.WriteLine("1: Reroll all dice");
                     Console.WriteLine("2: Reroll remaining dice");
 
-                    if ((turn % 2 == 0) && (Mode == "computer"))
+                    if ((turn % 2 == 0) && (_Mode == "computer"))
                     {
                         // I made the computer choose 2 since it is the optimal choice
                         choice = "2";
@@ -188,7 +203,7 @@ namespace CMP1903_A2_2324
                 Console.WriteLine($"Player 1 total is {total} points");
             }
 
-            else if ((turn == 2) && (Mode == "player"))
+            else if ((turn == 2) && (_Mode == "player"))
             {
                 Console.WriteLine($"Player 2 has scored {score} points");
                 Console.WriteLine($"Player 2 total is {total} points");
@@ -208,16 +223,19 @@ namespace CMP1903_A2_2324
             if (turn % 2 == 0)
             {
                 Console.WriteLine($"Player 1 wins");
+                Statistics.player1WinsUpdate();
             }
 
-            else if ((turn % 2 == 1) && (Mode == "player"))
+            else if ((turn % 2 == 1) && (_Mode == "player"))
             {
                 Console.WriteLine($"Player 2 wins");
+                Statistics.player2WinsUpdate();
             }
 
             else
             {
                 Console.WriteLine($"The computer wins");
+                Statistics.ComputerWinsUpdate();
             }
         }
     }

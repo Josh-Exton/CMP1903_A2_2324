@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace CMP1903_A2_2324
 {
+    /// <summary>
+    /// Rolls a dice
+    /// </summary>
     internal class Die
     {
         // Creating the random field
@@ -10,7 +14,7 @@ namespace CMP1903_A2_2324
         private int _num;
 
         /// <summary>
-        /// The number properity which will be between 1 and 6
+        /// Gets the current number of the dice
         /// </summary>
         public int Num
         {
@@ -23,8 +27,9 @@ namespace CMP1903_A2_2324
         /// </summary>
         public Die()
         {
+            // initizling the random 
             rand = new Random();
-            //initizling the random 
+            // Gives the propertie a starting value
             Roll();
         }
 
@@ -36,9 +41,8 @@ namespace CMP1903_A2_2324
         {
             // Asaigns a random number between 1 and 6
             int num = rand.Next(1,7);
-            // Keeps the propity updated
+            // Keeps the propertie updated
             Num = num;
-            // returns the number
             return num;
         }
     }

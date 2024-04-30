@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace CMP1903_A2_2324
 {
+    /// <summary>
+    /// Forces a class to add a Play functionality
+    /// </summary>
     interface IPlayable
     {
-         public void Play();
+        /// <summary>
+        /// The Play functionality that needs to be added
+        /// </summary>
+        public void Play();
     }
 }

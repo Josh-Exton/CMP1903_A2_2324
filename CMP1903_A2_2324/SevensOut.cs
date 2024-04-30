@@ -1,32 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading.Tasks.Sources;
+using System.Xml.Serialization;
 
 namespace CMP1903_A2_2324
 {
+    /// <summary>
+    /// Plays the Sevens Out game
+    /// </summary>
     internal sealed class SevensOut : Game
     {
-
+        /// <summary>
+        /// Updates the _Mode propertie to the parameter which needs to be "player" or "computer"
+        /// </summary>
+        /// <param name="mode">Playing againt a player or computer</param>
         public SevensOut(string mode)
         {
             Statistics.SevensOutPlaysUpdate();
-            Mode = mode;
+            mode = mode.ToLower();
+            mode = mode.Trim();
+            _Mode = mode;
+        }
+
+        /// <summary>
+        /// Mainly for testing and sets the _Mode to "computer"
+        /// </summary>
+        public SevensOut() 
+        {
+            _Mode = "computer";
         }
 
         public override void Play()
         {
             Console.WriteLine("Player 1's turn");
             long player1Score = PlayRound();
-            if (Mode == "player")
+            if (_Mode == "player")
             {
                 Console.WriteLine("Player 2's turn");
             }
 
-            else if (Mode == "computer")
+            else if (_Mode == "computer")
             {
                 Console.WriteLine("computers turn turn");
             }
@@ -86,22 +97,22 @@ namespace CMP1903_A2_2324
 
             else if (player1Score < player2Score)
             {
-                if (Mode == "player")
+                if (_Mode == "player")
                 {
                     Console.WriteLine("Player 2 wins");
                     Statistics.player2WinsUpdate();
                 }
-                else if (Mode == "computer")
+                else if (_Mode == "computer")
                 {
                     Console.WriteLine("Computer wins");
-                    Statistics.computerWinsUpdate();
+                    Statistics.ComputerWinsUpdate();
                 }
             }
 
             else
             {
                 Console.WriteLine("The game was a draw");
-                Statistics.drawUpdate();
+                Statistics.DrawsUpdate();
             }
         }
     }
