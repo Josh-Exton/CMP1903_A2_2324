@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -21,11 +22,35 @@ namespace CMP1903_A2_2324
 
         public void test()
         {
+            int player1Total = 0;
+            int otherTotal = 0;
+            long turn = 1;
             Console.WriteLine();
             Console.WriteLine("test");
-            int[] array = { 2,2,1,1,1 };
-            Console.WriteLine(FindDuplicatesCount(array));
-            Console.WriteLine(FindDuplicatesValue(array));
+            Die[] dice = DiceArray(5);
+            while ((player1Total < 20) && (otherTotal < 20))
+            {
+                int[] rolls = new int[dice.Length];
+                for (int i = 0; i < rolls.Length; i++)
+                {
+                    rolls[i] = dice[i].Num;
+
+                }
+                int duplicateValue = FindDuplicatesValue(rolls);
+                int duplicateCount = FindDuplicatesCount(rolls);
+                if (duplicateCount <= 1)
+                {
+                    CheckReroll(duplicateValue, duplicateCount, dice, rolls, turn);
+                    if (turn % 2 == 1)
+                    {
+                        ScoreUpdate(duplicateCount, ref player1Total);
+                    }
+                    else
+                    {
+                        ScoreUpdate(duplicateCount, ref otherTotal);
+                    }
+                }
+            }
         }
 
         public override void Play()
@@ -76,6 +101,7 @@ namespace CMP1903_A2_2324
                         { 
                             choice = "2";
                         }
+
                         else
                         {
                             choice = Console.ReadLine().Trim();
@@ -261,6 +287,61 @@ namespace CMP1903_A2_2324
                              select dieGroup.Key;
 
             return duplicates.FirstOrDefault();
+        }
+
+        private void CheckReroll(int value, int count, Die[] die, int[] rolls, long turn)
+        {
+            if (count == 2) 
+            {
+                bool done = false;
+                string choice;
+                while (!done)
+                {
+                    Console.WriteLine("Please select what you want to do from the options below");
+                    Console.WriteLine("1: Reroll all dice");
+                    Console.WriteLine("2: Reroll remaining dice");
+                    if ((turn % 2 == 0) && (Mode == "computer"))
+                    {
+                        choice = "2";
+                    }
+
+                    else
+                    {
+                        choice = Console.ReadLine().Trim();
+                    }
+
+                    Console.WriteLine();
+
+                    for (int i = 0; i < rolls.Length; i++)
+                    {
+                        if (die[i].Num != value)
+                        {
+                            die[i].Roll();
+                            rolls[i] = die[i].Num;
+                        }
+                    }
+                }
+            }
+        }
+
+        private int ScoreUpdate(int count, ref int score)
+        {
+            if (count == 3)
+            {
+                score += 3;
+            }
+
+            else if (count == 4)
+            {
+                score += 6;
+            }
+
+            else if (count == 5)
+            {
+                score += 12;
+            }
+
+            return score;
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CMP1903_A2_2324
 {
-    static class Statistics
+    internal static class Statistics
     {
 
         // defining the fields

@@ -21,7 +21,6 @@ namespace CMP1903_A2_2324
 
         protected Die[] DiceArray(int length)
         {
-
             if (length <= 0)
             {
                 throw new ArgumentException("Length must be a positive integer.", nameof(length));
