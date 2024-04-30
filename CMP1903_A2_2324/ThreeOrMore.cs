@@ -13,10 +13,19 @@ namespace CMP1903_A2_2324
 {
     internal sealed class ThreeOrMore : Game
     {
-        public ThreeOrMore(string mode) 
+        public ThreeOrMore(string mode)
         {
             Statistics.ThreeOrMorePlaysUpdate();
             Mode = mode;
+        }
+
+        public void test()
+        {
+            Console.WriteLine();
+            Console.WriteLine("test");
+            int[] array = { 2,2,1,1,1 };
+            Console.WriteLine(FindDuplicatesCount(array));
+            Console.WriteLine(FindDuplicatesValue(array));
         }
 
         public override void Play()
@@ -28,7 +37,7 @@ namespace CMP1903_A2_2324
             while ((player1Total < 20) && (otherTotal < 20))
             {
                 Console.WriteLine();
-                 
+                
                 Console.Write("The numbers you rolled are - ");
                 foreach (Die dice in rolls)
                 {
@@ -226,6 +235,32 @@ namespace CMP1903_A2_2324
                 Console.WriteLine("The game was a draw");
                 Statistics.drawUpdate();
             }
+        }
+
+        private int FindDuplicatesCount(int[] dice)
+        {
+            var duplicates = from die in dice
+                             group die by die into dieGroup
+                             where dieGroup.Count() > 1
+                             select dieGroup.Count();
+
+            if (duplicates.Count() > 0 ) 
+            {
+                return duplicates.Max();
+            }
+
+            return 0;
+        }
+
+        private int FindDuplicatesValue(int[] dice)
+        {
+            var duplicates = from die in dice
+                             group die by die into dieGroup
+                             where dieGroup.Count() > 1
+                             orderby dieGroup.Count() descending
+                             select dieGroup.Key;
+
+            return duplicates.FirstOrDefault();
         }
     }
 }

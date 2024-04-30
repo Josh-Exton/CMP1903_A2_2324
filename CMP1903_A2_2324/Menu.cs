@@ -8,9 +8,6 @@ namespace CMP1903_A2_2324
 {
     internal class Menu
     {
-        public Menu() 
-        {
-        }
 
         public void DisplayMenu()
         {
@@ -30,7 +27,8 @@ namespace CMP1903_A2_2324
                 {
                     string mode = DisplayModeOptions();
                     ThreeOrMore threeOrMore = new ThreeOrMore(mode);
-                    threeOrMore.Play();
+                    //threeOrMore.Play();
+                    threeOrMore.test();
                 }
                 else if (choice == "3")
                 {
