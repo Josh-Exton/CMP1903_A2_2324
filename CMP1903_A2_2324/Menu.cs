@@ -27,6 +27,7 @@ namespace CMP1903_A2_2324
                 // Checking what the user inputted
                 if (choice == "1")
                 {
+                    // Playing sevens out
                     string mode = DisplayModeOptions();
                     SevensOut sevensOut = new SevensOut(mode);
                     sevensOut.Play();
@@ -34,6 +35,7 @@ namespace CMP1903_A2_2324
 
                 else if (choice == "2")
                 {
+                    // Playing three or more
                     string mode = DisplayModeOptions();
                     ThreeOrMore threeOrMore = new ThreeOrMore(mode);
                     threeOrMore.Play();
@@ -41,17 +43,22 @@ namespace CMP1903_A2_2324
 
                 else if (choice == "3")
                 {
+                    // Displaying the Statistics
                     Statistics.DisplayStatistics();
                 }
 
                 else if (choice == "4")
                 {
+                    // Testing the games
                     Testing testing = new Testing();
                     testing.DieCheck();
+                    testing.SevensOutCheck();
+                    testing.ThreeOrMoreCheck();
                 }
 
                 else if (choice == "5")
                 {
+                    // Closing the menu
                     done = true;
                 }
 
@@ -74,7 +81,7 @@ namespace CMP1903_A2_2324
             Console.WriteLine("1: play sevens out");
             Console.WriteLine("2: play three or more");
             Console.WriteLine("3: provide statistics");
-            Console.WriteLine("4: test");
+            Console.WriteLine("4: test the games");
             Console.WriteLine("5: exit");
         }
 

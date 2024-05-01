@@ -8,6 +8,32 @@ namespace CMP1903_A2_2324
     /// </summary>
     internal sealed class SevensOut : Game
     {
+        // Setting up the scores so the testing class can access them.
+
+        // defining the fields 
+        private long _player1Sum;
+        private long _otherSum;
+
+        // defining the properties
+
+        /// <summary>
+        /// Gets the final sum of player 1
+        /// </summary>
+        public long Player1Sum
+        {
+            get { return _player1Sum; }
+            private set { _player1Sum = value; }
+        }
+
+        /// <summary>
+        /// Gets the final sum of the other player
+        /// </summary>
+        public long OtherSum
+        {
+            get { return _otherSum; }
+            private set { _otherSum = value; }
+        }
+
         /// <summary>
         /// Updates the _Mode propertie to the parameter which needs to be "player" or "computer"
         /// </summary>
@@ -51,9 +77,10 @@ namespace CMP1903_A2_2324
             bool done = false;
             Die[] rolls = DiceArray(2);
             long total = 0;
+            int sum = 0;
             while (!done) 
             {
-                int sum = rolls[0].Num + rolls[1].Num;
+                sum = rolls[0].Num + rolls[1].Num;
 
                 Console.WriteLine($"Rolled number 1 is {rolls[0].Num}");
                 Console.WriteLine($"Rolled number 2 is {rolls[1].Num}");
@@ -84,6 +111,17 @@ namespace CMP1903_A2_2324
             Console.WriteLine($"The final total is {total}");
             Statistics.SevensOutHighScoreUpdate(total);
             Console.WriteLine();
+
+            if (Player1Sum == 0)
+            {
+                Player1Sum = sum;
+            }
+
+            else
+            {
+                OtherSum = sum;
+            };
+
             return total;            
         }
 

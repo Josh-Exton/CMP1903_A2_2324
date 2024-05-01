@@ -17,6 +17,33 @@ namespace CMP1903_A2_2324
 {
     internal sealed class ThreeOrMore : Game
     {
+
+        // Setting up the scores so the testing class can access them.
+
+        // defining the fields 
+        private int _player1Total;
+        private int _otherTotal;
+
+        // defining the properties
+
+        /// <summary>
+        /// Gets the final sum of player 1
+        /// </summary>
+        public int Player1Total
+        {
+            get { return _player1Total; }
+            private set { _player1Total = value; }
+        }
+
+        /// <summary>
+        /// Gets the final sum of the other player
+        /// </summary>
+        public int OtherTotal
+        {
+            get { return _otherTotal; }
+            private set { _otherTotal = value; }
+        }
+
         /// <summary>
         /// Updates the _Mode propertie to the parameter which needs to be "player" or "computer"
         /// </summary>
@@ -39,12 +66,10 @@ namespace CMP1903_A2_2324
 
         public override void Play()
         {
-            int player1Total = 0;
-            int otherTotal = 0;
             long turn = 1;
             Die[] rolls = DiceArray(5);
 
-            while ((player1Total < 20) && (otherTotal < 20))
+            while ((Player1Total < 20) && (OtherTotal < 20))
             {
                 if (turn % 2 == 1)
                 {
@@ -70,14 +95,13 @@ namespace CMP1903_A2_2324
 
                 if (turn % 2 == 1)
                 {
-                    player1Total = ScoreUpdate(duplicateCount, player1Total, 1);
+                    Player1Total = ScoreUpdate(duplicateCount, Player1Total, 1);
                 }
 
                 else
                 {
-                    otherTotal = ScoreUpdate(duplicateCount, otherTotal, 2);
+                    OtherTotal = ScoreUpdate(duplicateCount, OtherTotal, 2);
                 }
-
 
                 foreach (Die die in rolls)
                 {
