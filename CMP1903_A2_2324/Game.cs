@@ -31,10 +31,10 @@ namespace CMP1903_A2_2324
         /// <summary>
         /// Creates a array containg die objects
         /// </summary>
-        /// <param name="length">How many dice you want in the array</param>
+        /// <param name="length">How many dice you want in the list</param>
         /// <returns>The dice array</returns>
         /// <exception cref="ArgumentException">If you pass in a value less than 1</exception>
-        protected Die[] DiceArray(int length)
+        protected List<Die> DiceList(int length)
         {
             // If a value is passed that is less than 1 it throws an exception
             if (length <= 0)
@@ -43,13 +43,30 @@ namespace CMP1903_A2_2324
             }
 
             // Creates an empty array of the size specified and adds that amount of dice objects
-            Die[] array = new Die[length];
+            List<Die> list = new List<Die>();
             for (int i = 0; i < length; i++)
             {
-                array[i] = new Die();
+                list.Add(new Die());
             }
 
-            return array;
+            return list;
         }
+
+
+        /// <summary>
+        /// Displays the dice rolls
+        /// </summary>
+        /// <param name="dice">The dice list</param>
+        protected void DisplayDice(List<Die> dice)
+        {
+            Console.Write("The numbers you rolled are - ");
+            foreach (Die die in dice)
+            {
+                Console.Write($"{die.Num} ");
+            }
+
+            Console.WriteLine();
+        }
+
     }
 }
