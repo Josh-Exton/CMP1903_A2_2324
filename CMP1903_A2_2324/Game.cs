@@ -51,22 +51,5 @@ namespace CMP1903_A2_2324
 
             return list;
         }
-
-
-        /// <summary>
-        /// Displays the dice rolls
-        /// </summary>
-        /// <param name="dice">The dice list</param>
-        protected void DisplayDice(List<Die> dice)
-        {
-            Console.Write("The numbers you rolled are - ");
-            foreach (Die die in dice)
-            {
-                Console.Write($"{die.Num} ");
-            }
-
-            Console.WriteLine();
-        }
-
     }
 }
