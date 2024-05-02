@@ -124,6 +124,7 @@ namespace CMP1903_A2_2324
                 turn++;
                 Console.WriteLine();
             }
+            Statistics.ThreeOrMoreMostTurnsUpdate(turn);
             DisplayWinner(turn);
         }
 

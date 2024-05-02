@@ -180,11 +180,11 @@ namespace CMP1903_A2_2324
             Console.WriteLine($"Sevens out has been played {SevensOutPlays} times");
             Console.WriteLine($"The sevens out high score is {SevensOutHighScore}");
             Console.WriteLine($"Three or more has been played {ThreeOrMorePlays} times");
-            Console.WriteLine($"The most amount of turns played in Three or more is {ThreeOrMoreMostTurns} times");
+            Console.WriteLine($"The most amount of turns played in Three or more is {ThreeOrMoreMostTurns} turns");
             Console.WriteLine($"Player 1 has won {Player1Wins} times in total");
             Console.WriteLine($"Player 2 has won {Player2Wins} times in total");
             Console.WriteLine($"The computer has won {ComputerWins} times in total");
-            Console.WriteLine($"There has been {Draws} in total");
+            Console.WriteLine($"There has been {Draws} draws in total");
         }
     }
 }
